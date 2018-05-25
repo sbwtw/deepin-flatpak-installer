@@ -19,6 +19,7 @@
 
 #include "utils.h"
 #include <QSettings>
+#include <QProcess>
 
 Utils::Utils(QObject *parent)
     : QObject(parent)
@@ -40,4 +41,17 @@ std::tuple<QString, QString, QString> Utils::getInfo(const QString &filePath)
     const QString info = config.value("Title").toString();
 
     return std::make_tuple(appName, branch, info);
+}
+
+bool Utils::install(const QString &filePath)
+{
+    QProcess *process = new QProcess;
+    bool failed = false;
+
+    process->start("pkexec", QStringList() << "flatpak" << "install" << filePath);
+    process->waitForFinished(-1);
+    failed |= process->exitCode();
+    process->deleteLater();
+
+    return !failed;
 }

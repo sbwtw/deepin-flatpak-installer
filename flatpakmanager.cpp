@@ -17,22 +17,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UTILS_H
-#define UTILS_H
+#include "flatpakmanager.h"
+#include <QProcess>
 
-#include <QObject>
-
-class Utils : public QObject
+FlatpakManager::FlatpakManager(QObject *parent)
+    : QThread(parent)
 {
-    Q_OBJECT
-    
-public:
-    Utils(QObject *parent = nullptr);
-    ~Utils();
+}
 
-    // name, version, info
-    static std::tuple<QString, QString, QString> getInfo(const QString &filePath);
-    static bool install(const QString &filePath);
-};
-
-#endif
+FlatpakManager::~FlatpakManager()
+{
+}

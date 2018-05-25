@@ -30,12 +30,14 @@ SOURCES += \
         mainwindow.cpp \
         homepage.cpp \
         singlefilepage.cpp \
+        flatpakmanager.cpp \
         utils.cpp
         
 HEADERS += \
         mainwindow.h \
         homepage.h \
         singlefilepage.h \
+        flatpakmanager.h \
         utils.h
         
 RESOURCES += \

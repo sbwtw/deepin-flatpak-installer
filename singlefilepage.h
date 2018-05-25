@@ -22,6 +22,10 @@
 
 #include <QWidget>
 #include <QLabel>
+#include "dspinner.h"
+#include "dsuggestbutton.h"
+
+DWIDGET_USE_NAMESPACE
 
 class SingleFilePage : public QWidget
 {
@@ -37,6 +41,10 @@ private:
     QLabel *m_appNameLabel;
     QLabel *m_versionLabel;
     QLabel *m_infoLabel;
+    DSuggestButton *m_installBtn;
+    DSpinner *m_spinner;
+
+    QString m_filePath;
 };
 
 #endif
