@@ -31,6 +31,9 @@ SingleFilePage::SingleFilePage(QWidget *parent)
       m_versionLabel(new QLabel),
       m_infoLabel(new QLabel),
       m_installBtn(new DSuggestButton("Install")),
+      m_reinstallBtn(new DSuggestButton("Reinstall")),
+      m_uninstallBtn(new DSuggestButton("Uninstall")),
+      m_doneBtn(new DSuggestButton("Done")),
       m_spinner(new DSpinner)
 {
     m_appNameLabel->setWordWrap(true);
@@ -49,6 +52,16 @@ SingleFilePage::SingleFilePage(QWidget *parent)
 
     m_installBtn->setFixedSize(100, 38);
     m_installBtn->setVisible(false);
+
+    m_reinstallBtn->setFixedSize(100, 38);
+    m_reinstallBtn->setVisible(false);
+
+    m_uninstallBtn->setFixedSize(100, 38);
+    m_uninstallBtn->setVisible(false);
+
+    m_doneBtn->setFixedSize(100, 38);
+    m_doneBtn->setVisible(false);
+    
     m_spinner->setVisible(false);
 
     formLayout->setLabelAlignment(Qt::AlignRight);
@@ -62,11 +75,22 @@ SingleFilePage::SingleFilePage(QWidget *parent)
 
     m_spinner->setFixedSize(35, 35);
 
+    QHBoxLayout *buttonsLayout = new QHBoxLayout;
+    buttonsLayout->addStretch();
+    buttonsLayout->addWidget(m_installBtn);
+    buttonsLayout->addSpacing(5);
+    buttonsLayout->addWidget(m_reinstallBtn);
+    buttonsLayout->addSpacing(5);
+    buttonsLayout->addWidget(m_uninstallBtn);
+    buttonsLayout->addSpacing(5);
+    buttonsLayout->addWidget(m_doneBtn);
+    buttonsLayout->addStretch();
+
     layout->addWidget(iconLabel, 0, Qt::AlignHCenter);
     layout->addSpacing(20);
     layout->addLayout(formLayout);
     layout->addStretch();
-    layout->addWidget(m_installBtn, 0, Qt::AlignHCenter);
+    layout->addLayout(buttonsLayout);
     layout->addWidget(m_spinner, 0, Qt::AlignHCenter);
     layout->addSpacing(10);
 
@@ -103,5 +127,17 @@ void SingleFilePage::setFilePath(const QString &filePath)
     m_versionLabel->setText(std::get<1>(infos));
     m_infoLabel->setText(std::get<2>(infos));
     m_spinner->setVisible(false);
-    m_installBtn->setVisible(true);
+
+    bool isInstalled = Utils::flatpakList().contains(std::get<0>(infos));
+    qDebug() << "是否安装：" << isInstalled;
+
+    if (isInstalled) {
+        m_installBtn->setVisible(false);
+        m_reinstallBtn->setVisible(true);
+        m_uninstallBtn->setVisible(true);
+    } else {
+        m_installBtn->setVisible(true);
+        m_reinstallBtn->setVisible(false);
+        m_uninstallBtn->setVisible(false);
+    }
 }

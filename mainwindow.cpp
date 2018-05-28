@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "dtitlebar.h"
+#include "utils.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : DMainWindow(parent),

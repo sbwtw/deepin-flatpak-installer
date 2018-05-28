@@ -20,6 +20,7 @@
 #include "utils.h"
 #include <QSettings>
 #include <QProcess>
+#include <QDebug>
 
 Utils::Utils(QObject *parent)
     : QObject(parent)
@@ -54,4 +55,23 @@ bool Utils::install(const QString &filePath)
     process->deleteLater();
 
     return !failed;
+}
+
+QStringList Utils::flatpakList()
+{
+    QProcess *process = new QProcess;
+    process->start("flatpak", QStringList() << "list");
+    process->waitForFinished(-1);
+
+    QStringList list;    
+    QString line;
+
+    while ((line = process->readLine()) != nullptr) {
+        const QString ref = line.split('\t').first();
+        const QString name = ref.split('/').first();
+
+        list << name;
+    }
+
+    return list;
 }

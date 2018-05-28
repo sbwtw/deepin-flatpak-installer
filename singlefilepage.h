@@ -42,6 +42,9 @@ private:
     QLabel *m_versionLabel;
     QLabel *m_infoLabel;
     DSuggestButton *m_installBtn;
+    DSuggestButton *m_reinstallBtn;
+    DSuggestButton *m_uninstallBtn;
+    DSuggestButton *m_doneBtn;
     DSpinner *m_spinner;
 
     QString m_filePath;

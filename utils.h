@@ -33,6 +33,7 @@ public:
     // name, version, info
     static std::tuple<QString, QString, QString> getInfo(const QString &filePath);
     static bool install(const QString &filePath);
+    static QStringList flatpakList();
 };
 
 #endif
